@@ -17,9 +17,9 @@ int counter = 0;
 int miss = 0;
 const int missMax = 5;  // How many miss count before flush
 const int flushMin = 10; // Minimum count to flush
-const servo_stop_point = 45 //default should be 90 but it's up to your servo
-const servo_low = 15
-const servo_high = 80
+const int servo_stop_point = 45; //default should be 90 but it's up to your servo
+const int servo_low = 15;
+const int servo_high = 80;
 
 void setup() {
   // put your setup code here, to run once:
@@ -52,14 +52,14 @@ void loop() {
     //Serial.println("clear");
   }else if ( distance > toilet_distance && miss >= missMax && counter >= flushMin){  // Object Stay for over 10 secs but now missing flush
     if (counter >= flushMin){                             // Half Flush
-      // Action : Roll Left 4.9 seconds stop for 0.5 second and roll right for 4.95 second to get to original position
+      // Action : Roll Left 4.9 seconds stop for 0.5 second and roll right for 4.95 second to get to original position      
       // test and modify the value that fit you Note: due to slower roll right speed on my servo I need a slightly longer run time
       myservo.write(servo_high);
       delay(4900);
       myservo.write(servo_stop_point);
       delay(500);
       myservo.write(servo_low);
-      delay(4950);
+      delay(4940);
       myservo.write(servo_stop_point);
     }else if (counter >= 60){                            // Full Flush
       myservo.write(servo_high);
@@ -67,7 +67,7 @@ void loop() {
       myservo.write(servo_stop_point);
       delay(1000);
       myservo.write(servo_low);
-      delay(4950);
+      delay(4940);
       myservo.write(servo_stop_point);
     }
     counter = 0;
@@ -77,6 +77,7 @@ void loop() {
   //Serial.println("miss: " + String(miss));
   delay(1000);
   /*
+   * //Code for testing 
   if(Serial.available() > 0){
     userInput = Serial.readString();
     deg = userInput.toInt();
@@ -89,6 +90,6 @@ void loop() {
     //myservo.write(0);
     motor_status = 0;
   }
-  delay(1000);
+  delay(1000);  
   */
 }
